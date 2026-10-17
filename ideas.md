@@ -1,0 +1,1 @@
+using a beta distribution does not require clipping. maybe look at later?
