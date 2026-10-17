@@ -3,11 +3,17 @@
 import numpy as np
 
 # constants mostly for later
-NUM_OF_AGENTS = 0       # change later
-SEED = 42
+NUM_OF_AGENTS = 10    
+SEED = 21
 LIST_OF_TRAITS = ['extraversion', 'agreeableness', 'neuroticism', 'honesty']
 BELL_CURVE_MEAN = 0.5
 BELL_CURVE_SPREAD = 0.15
+
+LIST_OF_NAMES = [
+    'Jon', 'Mark', 'Meagan', 'Debby', 'Damien', 
+    'Josh', 'Kenzie', 'Brick', 'Ash', 'Kevin' ]
+
+rng = np.random.default_rng(SEED)
 
 
 class Agent:
@@ -19,34 +25,49 @@ class Agent:
         self.traits = traits
         self.trust = {}
 
+    def __repr__(self):
+        return f"Agent({self.agent_id}, {self.name})"
+
+    def __str__(self):
+        pieces = []
+
+        for trait in LIST_OF_TRAITS:
+            score = self.traits[trait]
+            pieces.append(f"{trait[0].upper()} {score:.2f}")
+        traits_text = " ".join(pieces)
+        return f"{self.agent_id}, {self.name:<8} {traits_text}"
+
+        
+
 
 def main():
 
-    maya_traits = {
-    "extraversion": 0.8,
-    "agreeableness": 0.6,
-    "neuroticism": 0.7,
-    "honesty": 0.8, 
-    }
+    town = {}
 
-    MAYA = Agent(1, 'Maya', maya_traits)
-    MAYA.trust[1] = 0.7
+    for n in range(NUM_OF_AGENTS):
+        town[n] = Agent(n, LIST_OF_NAMES[n], create_traits_dictionary())
 
-    leo_traits = {
-        "extraversion": 0.7,
-        "agreeableness": 0.3,
-        "neuroticism": 0.4,
-        "honesty": 0.6,
-    }
+    for agent in town.values():
+        print(agent)
+        
 
-    LEO = Agent(2, 'Leo', leo_traits)
 
-    print(LEO.name)
-    print(MAYA.agent_id)
-    print(LEO.traits['honesty'])
-    print(MAYA.trust)
-    print(LEO.trust)
 
+
+
+
+def create_traits_dictionary():
+    
+    example_dictionary = {}
+    
+    for trait in LIST_OF_TRAITS:
+        random_value = rng.normal(BELL_CURVE_MEAN, BELL_CURVE_SPREAD)
+        np.clip(random_value, 0, 1)
+    
+        example_dictionary[trait] = random_value
+    
+    return example_dictionary
+    
 
 
 
