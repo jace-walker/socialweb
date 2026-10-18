@@ -15,19 +15,25 @@ DEFAULT_TRUST = 0.5                     # the default value of trust that will b
 COOPERATE = 1                           # named constant for the action of 'cooperating'
 CHEAT = 0                               # named constant for the action of 'cheating'              you cheater
 CHEAT_URGE = 0.6                        # used in temptation calculation
+PAYOFF_BOTH_COOPERATE = 3               # payoff if both agents cooperate with each other
+PAYOFF_CHEAT_WIN = 5                    # payoff if agent1 cheats while the other agent2 tried to cooperate
+PAYOFF_GOT_CHEATED = 0                  # payoff if agent1 gets cheated while trying to cooperate
+PAYOFF_BOTH_CHEAT = 1                   # payoff if both agents cheat against each other
 
+rng = np.random.default_rng(SEED) 
 
-LIST_OF_TRAITS = ['extraversion', 'agreeableness', 'neuroticism', 'honesty']                # list of traits an agent has
+LIST_OF_TRAITS = ['extraversion', 'agreeableness', 'neuroticism', 'honesty']               
 
 
 LIST_OF_NAMES = [
     'Jon', 'Mark', 'Meagan', 'Debby', 'Damien', 
-    'Josh', 'Kenzie', 'Brick', 'Ash', 'Kevin' ]                                             # who the hell is named brick
+    'Josh', 'Kenzie', 'Brick', 'Ash', 'Kevin' ]                                            
 
 
-rng = np.random.default_rng(SEED)         # like super important
-
-
+PAYOFF_TABLE = [
+    [PAYOFF_BOTH_CHEAT, PAYOFF_CHEAT_WIN],
+    [PAYOFF_GOT_CHEATED, PAYOFF_BOTH_COOPERATE]
+]        
 
 
 
@@ -42,7 +48,7 @@ class Agent:
         self.traits = traits            # list of four traits that are being tested
         self.trust = {}                 # dictionary that will contain trust rating for every OTHER agent
         self.met = set()                # create empty set for which who Agent has interacted with DIRECTLY
-        self.resources = 0              # if money is a measure of success for you, then this is the agent's success. starting with 10 money.
+        self.resources = 0              # if money is a measure of success for you, then this is the agent's success. starting with 0 money
         self.was_cheated = 0            # counter for how many times Agent was cheated by someone else
         self.did_cheating = 0           # counter for how many times Agent did the cheating against someone else
 
@@ -149,8 +155,8 @@ def main():
     maya.set_trust(leo.agent_id, 0.70)
     leo.set_trust(maya.agent_id, 0.60)
 
-    print(maya.make_decision(leo.agent_id))
-    print(leo.make_decision(maya.agent_id))
+
+    interaction(maya, leo)
 
 
 
@@ -160,24 +166,40 @@ def main():
 
 
 
-        
+def interaction(agent1, agent2):
+
+    agent1_decision = agent1.make_decision(agent2.agent_id)
+    agent2_decision = agent2.make_decision(agent1.agent_id)
+
+    print(agent1_decision)
+    print(agent2_decision)
+
+    agent1_payoff = PAYOFF_TABLE[agent1_decision][agent2_decision]
+    agent2_payoff = PAYOFF_TABLE[agent2_decision][agent1_decision]
+
+    print(agent1_payoff)
+    print(agent2_payoff)
 
 
 
 
 
-# this function wont be used again until i start generating a town of agents so ignore for now!!!
-def create_traits_dictionary():
-    
-    example_dictionary = {}
-    
-    for trait in LIST_OF_TRAITS:
-        random_value = rng.normal(BELL_CURVE_MEAN, BELL_CURVE_SPREAD)
-        np.clip(random_value, 0, 1)
-    
-        example_dictionary[trait] = random_value
-    
-    return example_dictionary
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     
 
 
