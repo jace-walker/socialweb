@@ -12,6 +12,7 @@ SEED = 21
 LIST_OF_TRAITS = ['extraversion', 'agreeableness', 'neuroticism', 'honesty']
 BELL_CURVE_MEAN = 0.5
 BELL_CURVE_SPREAD = 0.15
+DEFAULT_TRUST = 0.5
 
 LIST_OF_NAMES = [
     'Jon', 'Mark', 'Meagan', 'Debby', 'Damien', 
@@ -58,12 +59,27 @@ class Agent:
         """This method adds the partner's id to the agent's met set"""
         self.met.add(partner_id)
 
+
+    def get_trust(self, partner_id):
+        """This method uses the partner's ID to search for the agent's trust of said partner in their trust dictionary
+           If there is no trust because the agent's have never met or heard gossip, the default value is set to a constant above"""
+        if partner_id in self.trust:
+            return self.trust[partner_id]
+
+        return DEFAULT_TRUST
+
+        
+    def set_trust(self, partner_id, new_trust_rating):
+        """This method will set/override the agent's trust rating attached to the partner ID to the new trust rating
+           The entire program relies on the trust rating being between 0-1, so make a safety net or whatever"""
+        new_trust_rating = np.clip(new_trust_rating, 0, 1)
+        self.trust[partner_id] = new_trust_rating
         
 
 
 def main():
 
-# create maya and leo with predetermined personality values
+# create maya and leo with predetermined personality values, trust, and they HAVE met before
 
     maya_traits = {'agreeableness': 0.6, 'neuroticism': 0.7, 'honesty': 0.8, 'extraversion': 0.8}
     leo_traits = {'agreeableness': 0.7, 'neuroticism': 0.3, 'honesty': 0.9, 'extraversion': 0.5}
@@ -71,18 +87,25 @@ def main():
     maya = Agent(0, 'Maya', maya_traits)
     leo = Agent(1, 'Leo', leo_traits)
 
-    maya.met.add(leo.agent_id)
-
+    maya.add_to_met(leo.agent_id)
     leo.add_to_met(maya.agent_id)
 
-    print(maya.traits)
-    print(maya.met)
-    print(leo.traits)
-    print(leo.met)
+    maya.set_trust(leo.agent_id, 0.70)
+    leo.set_trust(maya.agent_id, 0.60)
 
 
 
-#Maya trusts Leo at 0.70, and Leo trusts Maya at 0.60
+    print(maya.get_trust(leo.agent_id))
+    print(leo.get_trust(maya.agent_id))
+
+
+    print(maya.__str__())
+    print(leo.__str__())
+    print(maya.__repr__())
+    print(leo.__repr__())
+
+
+
         
 
 

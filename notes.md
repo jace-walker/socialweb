@@ -20,15 +20,15 @@ this is how to generate random values for each trait. incase i need for later
 
 
 
-FOR LATER
+FOR LATER, had to axe to make room for maya, leo simulation
 
-  town_dictionary = {}
+  town = {}
 
+    for n in range(NUM_OF_AGENTS):
+        town[n] = Agent(n, LIST_OF_NAMES[n], create_traits_dictionary())
 
-    for index, name in enumerate(LIST_OF_NAMES):
-        town_dictionary[index] = Agent(index, name, create_traits_dictionary())
-
-    print(town_dictionary)
+    for agent in town.values():
+        print(agent)
 
 
 
