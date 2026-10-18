@@ -133,6 +133,12 @@ class Agent:
         
         return chosen_action
 
+
+
+    def change_resources(self, resource_change):
+        self.resources += resource_change
+        return self.resources
+
         
 
 
@@ -154,6 +160,7 @@ def main():
     leo.add_to_met(maya.agent_id)
     maya.set_trust(leo.agent_id, 0.70)
     leo.set_trust(maya.agent_id, 0.60)
+
 
 
     interaction(maya, leo)
