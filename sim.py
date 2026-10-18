@@ -8,7 +8,7 @@ import numpy as np
 # these constants are all in my blueprint that is not on the repo because i am a pos i guess..
 
 NUM_OF_AGENTS = 10                      # number of agents in town, irrelevant this early
-SEED = 20                               # important for random number gen, allows you to 'reproduce' my results
+SEED = 21                               # important for random number gen, allows you to 'reproduce' my results
 BELL_CURVE_MEAN = 0.5                   # look dude, statistics is all just jargon to me bro
 BELL_CURVE_SPREAD = 0.15                # see above...
 DEFAULT_TRUST = 0.5                     # the default value of trust that will be used if agents never met or heard gossip
@@ -177,15 +177,20 @@ def interaction(agent1, agent2):
 
     agent1_decision = agent1.make_decision(agent2.agent_id)
     agent2_decision = agent2.make_decision(agent1.agent_id)
-
     print(agent1_decision)
     print(agent2_decision)
 
+
     agent1_payoff = PAYOFF_TABLE[agent1_decision][agent2_decision]
     agent2_payoff = PAYOFF_TABLE[agent2_decision][agent1_decision]
-
     print(agent1_payoff)
     print(agent2_payoff)
+
+
+    agent1.change_resources(agent1_payoff)
+    agent2.change_resources(agent2_payoff)
+    print(agent1.resources)
+    print(agent2.resources)
 
 
 
