@@ -66,6 +66,7 @@ def main():
     print(MAYA.met)
     print(LEO.met)
     print(MAYA.resources)
+    print(MAYA.traits)
         
 
 
