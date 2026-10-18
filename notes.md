@@ -29,3 +29,11 @@ FOR LATER
         town_dictionary[index] = Agent(index, name, create_traits_dictionary())
 
     print(town_dictionary)
+
+
+
+because some of us dont know how git works :p
+git add sim.py
+git add notes.md
+git commit -m "What this addition added or changed"
+git push

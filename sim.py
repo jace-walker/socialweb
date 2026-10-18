@@ -3,6 +3,10 @@
 import numpy as np
 
 
+
+
+# these constants are all in my blueprint that is not on the repo because i am a pos i guess..
+
 NUM_OF_AGENTS = 10    
 SEED = 21
 LIST_OF_TRAITS = ['extraversion', 'agreeableness', 'neuroticism', 'honesty']
@@ -17,11 +21,14 @@ rng = np.random.default_rng(SEED)
 
 
 
+
+
+
+
 class Agent:
 # this class creates an Agent. only agent_id, name, and trait dictionary for now
 
     def __init__(self, agent_id, name, traits):
-
         self.agent_id = agent_id        # unique agent id starting from 0 to number of agents
         self.name = name                # agent's name, useless for statistics, just to make more human
         self.traits = traits            # list of four traits that are being tested
@@ -32,11 +39,12 @@ class Agent:
         self.did_cheating = 0           # counter for how many times Agent did the cheating against someone else
 
     def __repr__(self):
-
+        """For display purposes"""
         return f"Agent({self.agent_id}, {self.name})"
 
-    def __str__(self):
 
+    def __str__(self):
+        """Displays Agent ID, Name, and Each trait with value assigned"""
         pieces = []
 
         for trait in LIST_OF_TRAITS:
@@ -45,28 +53,36 @@ class Agent:
         traits_text = " ".join(pieces)
         return f"{self.agent_id}, {self.name:<8} {traits_text}"
 
+
+    def add_to_met(self, partner_id):
+        """This method adds the partner's id to the agent's met set"""
+        self.met.add(partner_id)
+
         
 
 
 def main():
 
-    town = {}
+# create maya and leo with predetermined personality values
 
-    for n in range(NUM_OF_AGENTS):
-        town[n] = Agent(n, LIST_OF_NAMES[n], create_traits_dictionary())
+    maya_traits = {'agreeableness': 0.6, 'neuroticism': 0.7, 'honesty': 0.8, 'extraversion': 0.8}
+    leo_traits = {'agreeableness': 0.7, 'neuroticism': 0.3, 'honesty': 0.9, 'extraversion': 0.5}
 
-    for agent in town.values():
-        print(agent)
+    maya = Agent(0, 'Maya', maya_traits)
+    leo = Agent(1, 'Leo', leo_traits)
 
-    MAYA = Agent(11, 'Maya', create_traits_dictionary())
-    LEO = Agent(12, 'Leo', create_traits_dictionary())
+    maya.met.add(leo.agent_id)
+
+    leo.add_to_met(maya.agent_id)
+
+    print(maya.traits)
+    print(maya.met)
+    print(leo.traits)
+    print(leo.met)
 
 
-    MAYA.met.add('Leo')
-    print(MAYA.met)
-    print(LEO.met)
-    print(MAYA.resources)
-    print(MAYA.traits)
+
+#Maya trusts Leo at 0.70, and Leo trusts Maya at 0.60
         
 
 
