@@ -19,6 +19,9 @@ PAYOFF_BOTH_COOPERATE = 3               # payoff if both agents cooperate with e
 PAYOFF_CHEAT_WIN = 5                    # payoff if agent1 cheats while the other agent2 tried to cooperate
 PAYOFF_GOT_CHEATED = 0                  # payoff if agent1 gets cheated while trying to cooperate
 PAYOFF_BOTH_CHEAT = 1                   # payoff if both agents cheat against each other
+TRUST_GAIN = 0.1                        # gain in trust if the OTHER agent cooperates with you
+BETRAYAL_BASE = 0.15
+BETRAYAL_NEURO = 0.35
 
 rng = np.random.default_rng(SEED) 
 
@@ -136,8 +139,30 @@ class Agent:
 
 
     def change_resources(self, resource_change):
+        """Takes in resource change amount and spits out new resource count"""
+
         self.resources += resource_change
         return self.resources
+
+
+
+    def trust_update(self, partner_id, partner_choice):
+        """This method will update the trust of idk fill in later.."""
+
+        if partner_choice == COOPERATE:
+            agent_trust_of_partner = self.get_trust(partner_id) + TRUST_GAIN
+            self.set_trust(partner_id, agent_trust_of_partner)
+
+        else:
+            agent_trust_of_partner = self.get_trust(partner_id)
+            agent_neuroticism = self.traits['neuroticism']
+            
+            neuroticism_change = BETRAYAL_BASE + (BETRAYAL_NEURO * agent_neuroticism)
+
+            agent_trust_of_partner -= neuroticism_change
+
+            self.set_trust(partner_id, agent_trust_of_partner)
+
 
         
 
