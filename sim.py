@@ -7,20 +7,25 @@ import numpy as np
 
 # these constants are all in my blueprint that is not on the repo because i am a pos i guess..
 
-NUM_OF_AGENTS = 10    
-SEED = 19
-LIST_OF_TRAITS = ['extraversion', 'agreeableness', 'neuroticism', 'honesty']
-BELL_CURVE_MEAN = 0.5
-BELL_CURVE_SPREAD = 0.15
-DEFAULT_TRUST = 0.5
-COOPERATE = 1
-CHEAT = 0
+NUM_OF_AGENTS = 10                      # number of agents in town, irrelevant this early
+SEED = 20                               # important for random number gen, allows you to 'reproduce' my results
+BELL_CURVE_MEAN = 0.5                   # look dude, statistics is all just jargon to me bro
+BELL_CURVE_SPREAD = 0.15                # see above...
+DEFAULT_TRUST = 0.5                     # the default value of trust that will be used if agents never met or heard gossip
+COOPERATE = 1                           # named constant for the action of 'cooperating'
+CHEAT = 0                               # named constant for the action of 'cheating'              you cheater
+CHEAT_URGE = 0.6                        # used in temptation calculation
+
+
+LIST_OF_TRAITS = ['extraversion', 'agreeableness', 'neuroticism', 'honesty']                # list of traits an agent has
+
 
 LIST_OF_NAMES = [
     'Jon', 'Mark', 'Meagan', 'Debby', 'Damien', 
-    'Josh', 'Kenzie', 'Brick', 'Ash', 'Kevin' ]
+    'Josh', 'Kenzie', 'Brick', 'Ash', 'Kevin' ]                                             # who the hell is named brick
 
-rng = np.random.default_rng(SEED)
+
+rng = np.random.default_rng(SEED)         # like super important
 
 
 
@@ -29,7 +34,7 @@ rng = np.random.default_rng(SEED)
 
 
 class Agent:
-# this class creates an Agent. only agent_id, name, and trait dictionary for now
+# this class creates an Agent and all the needed methods as they come up
 
     def __init__(self, agent_id, name, traits):
         self.agent_id = agent_id        # unique agent id starting from 0 to number of agents
@@ -96,21 +101,33 @@ class Agent:
         
         agent_trust_of_partner = self.get_trust(partner_id)
         agent_agreeableness = self.traits['agreeableness']
+        agent_honesty = self.traits['honesty']
 
         willingness = (0.5 * agent_agreeableness) + (0.5 * agent_trust_of_partner)       # this formula will be somewhere in the docs idk yet
-        decision_dice_roll = rng.uniform(0, 1)
+        willingness_dice_roll = rng.uniform(0, 1)
 
 
-        if willingness > decision_dice_roll:
-            chosen_action = COOPERATE
+# basically, if the agent has decided to cooperate, they undergo another check, the 'temptation' check on if they will switch to CHEAT.
+#   if after the first willingness roll, the agent decides to CHEAT, that is their final choice, and NO temptation check will happen
+        if willingness > willingness_dice_roll:
+            temptation = CHEAT_URGE * (1 - agent_honesty)
+            temptation_dice_roll = rng.uniform(0, 1)
+
+            if temptation > temptation_dice_roll:
+                chosen_action = CHEAT
+
+            else:
+                chosen_action = COOPERATE
+
+
         else:
             chosen_action = CHEAT
+
 
         
         return chosen_action
 
         
-
 
 
 
