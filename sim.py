@@ -1,8 +1,8 @@
-# create a class Agent and run super basic sim of just two agents
+# JACE WALKER'S LIFEWORK!!
 
 import numpy as np
 
-# constants mostly for later
+
 NUM_OF_AGENTS = 10    
 SEED = 21
 LIST_OF_TRAITS = ['extraversion', 'agreeableness', 'neuroticism', 'honesty']
@@ -27,7 +27,7 @@ class Agent:
         self.traits = traits            # list of four traits that are being tested
         self.trust = {}                 # dictionary that will contain trust rating for every OTHER agent
         self.met = set()                # create empty set for which who Agent has interacted with DIRECTLY
-        self.resources = 10              # if money is a measure of success for you, then this is the agent's success. starting with 10 money.
+        self.resources = 0              # if money is a measure of success for you, then this is the agent's success. starting with 10 money.
         self.was_cheated = 0            # counter for how many times Agent was cheated by someone else
         self.did_cheating = 0           # counter for how many times Agent did the cheating against someone else
 
