@@ -1,22 +1,3 @@
-this is how to generate random values for each trait. incase i need for later
-
-    random_extraversion = rng.normal(BELL_CURVE_MEAN, BELL_CURVE_SPREAD)
-    np.clip(random_extraversion, 0, 1)
-    print(random_extraversion)
-
-    random_agreeableness = rng.normal(BELL_CURVE_MEAN, BELL_CURVE_SPREAD)
-    np.clip(random_agreeableness, 0, 1)
-    print(random_agreeableness)
-
-    random_neuroticism = rng.normal(BELL_CURVE_MEAN, BELL_CURVE_SPREAD)
-    np.clip(random_neuroticism, 0, 1)
-    print(random_neuroticism)
-
-    random_honesty = rng.normal(BELL_CURVE_MEAN, BELL_CURVE_SPREAD)
-    np.clip(random_honesty, 0, 1)
-    print(random_honesty)
-
-
 
 
 

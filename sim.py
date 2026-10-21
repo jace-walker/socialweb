@@ -231,9 +231,5 @@ def interaction(agent1, agent2):
 
 
 
-
-
-
-
 if __name__ == '__main__':
     main()
