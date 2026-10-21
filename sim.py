@@ -66,7 +66,10 @@ def main():
     print()
     print(maya.calculate_interactions())
     print(leo.calculate_interactions())
+    print()
 
+
+    print(town.step_day())
 
 
 
