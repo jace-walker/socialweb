@@ -64,12 +64,10 @@ def main():
         print(town.population[i])
 
     print()
-    print(maya.calculate_interactions())
-    print(leo.calculate_interactions())
-    print()
 
 
-    town.step_day()
+    for day in range(NUM_OF_DAYS):
+        town.step_day()
 
 
 
