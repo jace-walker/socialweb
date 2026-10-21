@@ -8,7 +8,7 @@ import numpy as np
 # these constants are all in my blueprint that is not on the repo because i am a pos i guess..
 
 NUM_OF_AGENTS = 10                      # number of agents in town, irrelevant this early
-SEED = 20                               # important for random number gen, allows you to 'reproduce' my results
+SEED = 5                                # important for random number gen, allows you to 'reproduce' my results
 BELL_CURVE_MEAN = 0.5                   # look dude, statistics is all just jargon to me bro
 BELL_CURVE_SPREAD = 0.15                # see above...
 DEFAULT_TRUST = 0.5                     # the default value of trust that will be used if agents never met or heard gossip
@@ -164,6 +164,19 @@ class Agent:
             self.set_trust(partner_id, agent_trust_of_partner)
 
 
+
+    def display_stats(self, move, initial, after):
+        """Displays the agent's own ID, own name, inital trust of partner, after trust of partner, final resource count"""
+
+        if move == 0:
+            action = 'Cheat'
+        if move == 1:
+            action = 'Cooperate'
+
+
+        print(f"Agent {self.agent_id}: {self.name}, {action}, {initial:.2f} -> {after:.2f}, {self.resources} ")
+
+
         
 
 
@@ -198,34 +211,35 @@ def main():
 
 def interaction(agent1, agent2):
 
+# decision each agent made, is signified by constants for CHEAT, COOPERATE
     agent1_decision = agent1.make_decision(agent2.agent_id)
     agent2_decision = agent2.make_decision(agent1.agent_id)
-    print(agent1_decision)
-    print(agent2_decision)
 
 
+# pay off 
     agent1_payoff = PAYOFF_TABLE[agent1_decision][agent2_decision]
     agent2_payoff = PAYOFF_TABLE[agent2_decision][agent1_decision]
-    print(agent1_payoff)
-    print(agent2_payoff)
 
-
+# changed resources based off agent payoff
     agent1.change_resources(agent1_payoff)
     agent2.change_resources(agent2_payoff)
-    print(agent1.resources)
-    print(agent2.resources)
 
 
-    print(agent1.get_trust(agent2.agent_id))
-    print(agent2.get_trust(agent1.agent_id))
+# get initial trust of each other, and after trust of each other
+    initial_agent1_trust_of_agent2 = agent1.get_trust(agent2.agent_id)
+    initial_agent2_trust_of_agent1 = agent2.get_trust(agent1.agent_id)
     agent1.trust_update(agent2.agent_id, agent2_decision)
     agent2.trust_update(agent1.agent_id, agent1_decision)
-    print(agent1.get_trust(agent2.agent_id))
-    print(agent2.get_trust(agent1.agent_id))
+    after_agent1_trust_of_agent2 = agent1.get_trust(agent2.agent_id)
+    after_agent2_trust_of_agent1 = agent2.get_trust(agent1.agent_id)
 
 
 
-
+    print('\nSimulated interaction between Maya and Leo')
+    print(f"Seed #: {SEED}\n")
+    agent1.display_stats(agent1_decision, initial_agent1_trust_of_agent2, after_agent1_trust_of_agent2)
+    agent2.display_stats(agent2_decision, initial_agent2_trust_of_agent1, after_agent2_trust_of_agent1)
+    print()
 
 
 
