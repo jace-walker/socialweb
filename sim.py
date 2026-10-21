@@ -29,6 +29,7 @@ from config import (
     BETRAYAL_BASE,
     BETRAYAL_NEURO,
     rng,
+    NUM_OF_DAYS,
     LIST_OF_TRAITS,
     LIST_OF_NAMES,
     PAYOFF_TABLE
@@ -61,6 +62,10 @@ def main():
 
     for i in town.population:
         print(town.population[i])
+
+    print()
+    print(maya.calculate_interactions())
+    print(leo.calculate_interactions())
 
 
 

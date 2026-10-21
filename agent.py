@@ -11,6 +11,8 @@ from config import (
     BETRAYAL_NEURO,
     CHEAT_URGE,
     TRUST_GAIN,
+    BASE_INTERACTIONS,
+    EXTRA_INTERACTIONS
 )
 
 
@@ -152,3 +154,11 @@ class Agent:
 
 
         print(f"Agent {self.agent_id}: {self.name}, {action}, {initial:.2f} -> {after:.2f}, {self.resources} ")
+
+
+
+    def calculate_interactions(self):
+        """Calculate the amount of interactions agent will do that day"""
+
+        interaction_count = 1 + round(4 * self.traits['extraversion'])
+        return interaction_count

@@ -18,6 +18,9 @@ PAYOFF_BOTH_CHEAT = 1                   # payoff if both agents cheat against ea
 TRUST_GAIN = 0.1                        # gain in trust if the OTHER agent cooperates with you
 BETRAYAL_BASE = 0.15                    # base value for the temptation calculation
 BETRAYAL_NEURO = 0.35                   # modifer that will scale the betrayal value based off of agent's own neuroticism
+NUM_OF_DAYS = 5                         # number of days that is ran by simulation, will change later
+BASE_INTERACTIONS = 1                   # minimum amount of interactions per agent per day
+EXTRA_INTERACTIONS = 5                  # max amount of interactions per agent per day, used as modifier
 
 
 rng = np.random.default_rng(SEED) 
