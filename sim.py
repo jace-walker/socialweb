@@ -7,6 +7,9 @@ import numpy as np
 # imported Agent class from agent.py
 from agent import Agent
 
+# imported Town class from town.py
+from town import Town
+
 
 # importing all constants from config.py
 from config import (
@@ -47,9 +50,23 @@ def main():
     maya.set_trust(leo.agent_id, 0.70)
     leo.set_trust(maya.agent_id, 0.60)
 
-
-
     interaction(maya, leo)
+
+# this is where milestone 3 starts in main function!!
+    print()
+
+    
+    town = Town()
+    town.setup()
+
+    for i in town.population:
+        print(town.population[i])
+
+
+
+
+
+
 
 
 
