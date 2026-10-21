@@ -18,6 +18,7 @@ class Town:
     def __init__(self):
         """Create class Town"""
         self.population = {}
+        self.day_count = 1              # day counter starts at day 1
 
 
 
