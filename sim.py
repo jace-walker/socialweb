@@ -69,7 +69,7 @@ def main():
     print()
 
 
-    print(town.step_day())
+    town.step_day()
 
 
 

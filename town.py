@@ -33,13 +33,19 @@ class Town:
     def step_day(self):
         """This method creates a list of ID's to loop through and calcuate each agent's interaction count for that day"""
 
-        today_ids = []
-
-        for id in self.population.keys():
-            today_ids.append(id)
-
+        today_ids = list(self.population.keys())
         rng.shuffle(today_ids)
-        return today_ids
+
+
+        for i in today_ids:
+            current_agent = self.population[i]
+
+            turn_count = current_agent.calculate_interactions()
+
+            for turn in range(turn_count):
+                print(f"Day {self.day_count}: {current_agent.name}, turn {turn+1} of {turn_count}.")
+
+        self.day_count += 1
 
         
 
